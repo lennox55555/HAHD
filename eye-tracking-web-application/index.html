@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Automotive Quality Control Eye-Tracking App</title>
+    <!-- Include WebGazer.js via CDN -->
+    <script src="https://webgazer.cs.brown.edu/webgazer.js"></script>
+    <link rel="stylesheet" href="styles.css?v=1.0"> <!-- Cache-busting query string added -->
+</head>
+
+<body>
+<h1>Automotive Quality Control Eye-Tracking App</h1>
+
+<!-- Starting Screen -->
+<div id="startScreen" style="text-align: center; padding: 20px;">
+    <h2>Welcome!</h2>
+    <p>Get ready to calibrate! Please click the red-highlighted dots as fast as you can.</p>
+    <button id="startButton">Start Calibration</button>
+</div>
+
+<!-- Calibration Instructions and Timer -->
+<div id="calibrationInstructions" style="display: none; text-align: center;">
+    <h2>Calibration</h2>
+    <p>Click the red dot as fast as possible!</p>
+    <div id="timer">Time: 0s</div>
+</div>
+
+<!-- Completion Screen (will show after calibration) -->
+<div id="completionScreen" style="display: none; text-align: center;">
+    <h2>Calibration Complete!</h2>
+    <p>Well done! You've clicked all the dots.</p>
+    <div id="finalTime">Your time: </div>
+    <button id="startQuizButton">Begin Quiz</button>
+</div>
+
+<h1 id="quizTitle" style="display: none;">Image Classification Quiz</h1>
+
+<!-- Progress Bar (hidden initially) -->
+<div id="progressContainer" style="display: none;">
+    <div id="progressBar"></div>
+</div>
+
+<!-- Quiz Container (hidden initially) -->
+<div id="quizContainer" style="display: none;">
+    <div id="imageContainer">
+        <img id="questionImage" src="" alt="Image Classification" />
+    </div>
+
+    <div id="answerContainer">
+        <button class="answerButton" id="answer1"></button>
+        <button class="answerButton" id="answer2"></button>
+        <button class="answerButton" id="answer3"></button>
+        <button class="answerButton" id="answer4"></button>
+        <button class="answerButton" id="answer5"></button>
+        <button class="answerButton" id="answer6"></button>
+    </div>
+</div>
+
+<script type="module" src="app.js?v=1.0"></script> <!-- Cache-busting query string added -->
+<script type="module" src="quiz.js?v=1.0"></script> <!-- Cache-busting query string added -->
+</body>
+</html>

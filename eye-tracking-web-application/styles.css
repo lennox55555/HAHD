@@ -1,0 +1,175 @@
+/* General page styling */
+body {
+    background-color: #f4f4f4;
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    margin: 0;
+    overflow-x: hidden;
+    padding: 0;
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+    font-size: 32px;
+    margin-top: 20px;
+}
+
+h2 {
+    color: #333;
+    font-size: 24px;
+    margin-top: 10px;
+}
+
+p {
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+/* Answer buttons at the bottom of the screen */
+#answerContainer {
+    bottom: 15%;
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    left: 50%;
+    position: fixed;
+    transform: translateX(-50%);
+    width: 60%;
+}
+#trackingDot {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    width: 20px;
+    height: 20px;
+}
+.answerButton {
+    background-color: #4caf50;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 18px;
+    padding: 15px;
+    text-align: center;
+}
+
+.answerButton:active {
+    background-color: #388e3c;
+}
+
+.answerButton:hover {
+    background-color: #45a049;
+}
+
+/* Calibration and completion screen styling */
+#startScreen, #calibrationInstructions, #completionScreen {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    padding: 20px;
+    text-align: center;
+    width: 80%;
+}
+
+#completionScreen {
+    display: none;
+}
+
+/* Calibration button */
+.calibration-button {
+    background-color: red;
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    height: 80px;
+    position: absolute;
+    transition: transform 0.2s ease;
+    width: 80px;
+}
+
+.calibration-button:active {
+    background-color: darkred;
+    transform: scale(0.95);
+}
+
+.calibration-button:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* Calibration points */
+.calibration-point, #gaze-prediction {
+    border-radius: 50%;
+    pointer-events: none;
+    position: absolute;
+}
+
+.calibration-point {
+    background-color: red;
+}
+
+#gaze-prediction {
+    background-color: blue;
+    height: 10px;
+    width: 10px;
+}
+
+/* Image styling */
+#imageContainer {
+    margin: 20px auto;
+}
+
+#questionImage {
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    height: auto;
+    max-width: 60%;
+}
+
+/* Progress bar */
+#progressContainer {
+    background-color: #eee;
+    border-radius: 8px;
+    height: 20px;
+    margin: 20px auto;
+    width: 60%;
+}
+
+#progressBar {
+    background-color: #4caf50;
+    border-radius: 8px;
+    height: 100%;
+    width: 0%;
+}
+
+/* Quiz and completion buttons */
+#startQuizButton {
+    background-color: #4caf50;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 15px 30px;
+}
+
+/* Responsive styling */
+@media screen and (max-width: 768px) {
+    #answerContainer {
+        width: 90%;
+    }
+
+    #calibrationInstructions, #mainContent {
+        width: 90%;
+    }
+
+    #inspectionImage {
+        max-width: 100%;
+    }
+}
