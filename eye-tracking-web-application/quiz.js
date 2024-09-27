@@ -4,17 +4,56 @@ import { GazeDataCollector } from './app.js'; // Importing GazeDataCollector pro
 // Define the quiz data with questions, answers, and correct answers
 const quizData = [
     {
-        image: 'images/dog.jpg',  // Ensure this file exists in the correct directory
+        image: 'images/0001.png',  // Ensure this file exists in the correct directory
         answers: ['Dog', 'Cat', 'Elephant', 'Horse', 'Rabbit', "I don't know"],
         correct: 'Dog'
     },
     {
-        image: 'images/cat.jpg',
+        image: 'images/0002.png',
         answers: ['Dog', 'Cat', 'Elephant', 'Horse', 'Rabbit', "I don't know"],
         correct: 'Cat'
-    }
+    },
+    {
+        image: 'images/0003.png',  // Ensure this file exists in the correct directory
+        answers: ['Dog', 'Cat', 'Elephant', 'Horse', 'Rabbit', "I don't know"],
+        correct: 'Dog'
+    },
+    {
+        image: 'images/0004.png',
+        answers: ['Dog', 'Cat', 'Elephant', 'Horse', 'Rabbit', "I don't know"],
+        correct: 'Cat'
+    },
+    {
+        image: 'images/0005.png',  // Ensure this file exists in the correct directory
+        answers: ['Dog', 'Cat', 'Elephant', 'Horse', 'Rabbit', "I don't know"],
+        correct: 'Dog'
+    },
+    {
+        image: 'images/0006.png',
+        answers: ['Dog', 'Cat', 'Elephant', 'Horse', 'Rabbit', "I don't know"],
+        correct: 'Cat'
+    },
+    {
+        image: 'images/0007.png',  // Ensure this file exists in the correct directory
+        answers: ['Dog', 'Cat', 'Elephant', 'Horse', 'Rabbit', "I don't know"],
+        correct: 'Dog'
+    },
+    {
+        image: 'images/0008.png',
+        answers: ['Dog', 'Cat', 'Elephant', 'Horse', 'Rabbit', "I don't know"],
+        correct: 'Cat'
+    },
+    {
+        image: 'images/0009.png',
+        answers: ['Dog', 'Cat', 'Elephant', 'Horse', 'Rabbit', "I don't know"],
+        correct: 'Dog'
+    },
+    {
+        image: 'images/0010.png',
+        answers: ['Dog', 'Cat', 'Elephant', 'Horse', 'Rabbit', "I don't know"],
+        correct: 'Cat'
+    },
 ];
-
 
 let currentQuestion = 0;
 let score = 0;
@@ -22,7 +61,6 @@ const totalQuestions = quizData.length;
 const gazeDataCollector = new GazeDataCollector();
 
 // Get elements from DOM
-const progressBar = document.getElementById('progressBar');
 const questionImage = document.getElementById('questionImage');
 const answerButtons = [
     document.getElementById('answer1'),
@@ -34,7 +72,6 @@ const answerButtons = [
 ];
 const quizContainer = document.getElementById('quizContainer');
 const quizTitle = document.getElementById('quizTitle');
-const progressContainer = document.getElementById('progressContainer');
 const startQuizButton = document.getElementById('startQuizButton');
 const completionScreen = document.getElementById('completionScreen'); // For hiding after quiz starts
 
@@ -52,7 +89,6 @@ function startQuiz() {
 
     quizTitle.style.display = 'block';
     quizContainer.style.display = 'block';
-    progressContainer.style.display = 'block';
 
     loadQuestion();
 }
@@ -60,16 +96,31 @@ function startQuiz() {
 function loadQuestion() {
     const currentData = quizData[currentQuestion];
 
-    questionImage.src = currentData.image;
+    // Hide answer buttons initially
+    answerButtons.forEach(button => button.style.display = 'none');
 
-    currentData.answers.forEach((answer, index) => {
-        answerButtons[index].innerText = answer;
-        answerButtons[index].onclick = () => checkAnswer(answer);
-    });
+    // Display the image and reset size to take up the entire page
+    questionImage.src = currentData.image;
+    questionImage.style.display = 'block';
+    questionImage.style.width = '100vw';  // Full viewport width
+    questionImage.style.height = '100vh'; // Full viewport height
 
     // Reset and start tracking gaze data for the new question
     gazeDataCollector.reset();
     gazeDataCollector.startTracking();
+
+    // Display the image for 7 seconds, then hide the image and show the answer buttons
+    setTimeout(() => {
+        // Hide the image after 7 seconds
+        questionImage.style.display = 'none';
+
+        // Show answer buttons and assign click handlers
+        currentData.answers.forEach((answer, index) => {
+            answerButtons[index].innerText = answer;
+            answerButtons[index].style.display = 'block';  // Show the answer buttons
+            answerButtons[index].onclick = () => checkAnswer(answer);
+        });
+    }, 10000); // 7 seconds delay before showing the questions
 }
 
 function checkAnswer(answer) {
@@ -87,23 +138,18 @@ function checkAnswer(answer) {
         })
     };
 
-
     sendDataToAWS(dataToSend);
 
     // Move to the next question
     currentQuestion++;
     if (currentQuestion < totalQuestions) {
         loadQuestion();
-        updateProgressBar();
     } else {
         finishQuiz();
     }
 }
 
-function updateProgressBar() {
-    const progress = (currentQuestion / totalQuestions) * 100;
-    progressBar.style.width = progress + '%';
-}
+
 
 function finishQuiz() {
     alert(`Quiz completed! Your score is ${score} out of ${totalQuestions}.`);

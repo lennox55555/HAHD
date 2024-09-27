@@ -151,7 +151,7 @@ class EyeTrackingApp {
         this.cacheManager = new CacheManager();  // Initialize the CacheManager
         this.totalClicks = 0;
         this.maxClicks = 30; // Set the number of clicks for calibration
-        this.dotSize = 40;
+        this.dotSize = 80; // Increased size for visibility of number
         this.timer = 0;
         this.interval = null;
 
@@ -189,23 +189,45 @@ class EyeTrackingApp {
         const dot = document.querySelector('.calibration-button');
         const randomX = Math.floor(Math.random() * (window.innerWidth - this.dotSize));
         const randomY = Math.floor(Math.random() * (window.innerHeight - this.dotSize));
+
         dot.style.position = 'absolute';
         dot.style.left = `${randomX}px`;
         dot.style.top = `${randomY}px`;
         dot.style.backgroundColor = 'red';
         dot.disabled = false;
+
+        // Set the inner text of the dot to the remaining clicks
+        const remainingClicks = this.maxClicks - this.totalClicks;
+        dot.innerText = remainingClicks;
+
+        // Add the click handler
         dot.onclick = () => this.calibrate(randomX + this.dotSize / 2, randomY + this.dotSize / 2);
     }
 
     calibrate(screenX, screenY) {
         this.totalClicks += 1;
         webgazer.recordScreenPosition(screenX, screenY);
+
+        const dot = document.querySelector('.calibration-button');
+
+        // Trigger the pop animation
+        dot.classList.add('pop-animation');
+
+        // Remove the animation class after the animation ends
+        dot.addEventListener('animationend', () => {
+            dot.classList.remove('pop-animation');
+        });
+
+        // Check if the user has reached the max number of clicks
         if (this.totalClicks >= this.maxClicks) {
             this.endCalibration();
         } else {
-            this.placeNextDot();
+            setTimeout(() => {
+                this.placeNextDot(); // Place the next dot after animation
+            }, 200);  // Slight delay to match animation time
         }
     }
+
 
     startTimer() {
         this.startTime = Date.now();
