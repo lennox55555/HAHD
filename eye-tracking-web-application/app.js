@@ -150,7 +150,7 @@ class EyeTrackingApp {
         this.gazeDataCollector = new GazeDataCollector();
         this.cacheManager = new CacheManager();  // Initialize the CacheManager
         this.totalClicks = 0;
-        this.maxClicks = 30; // Set the number of clicks for calibration
+        this.maxClicks = 5; // Set the number of clicks for calibration
         this.dotSize = 80; // Increased size for visibility of number
         this.timer = 0;
         this.interval = null;
