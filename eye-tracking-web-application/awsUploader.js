@@ -1,6 +1,6 @@
 export async function sendDataToAWS(dataToSend) {
     // Replace with your API endpoint or AWS Lambda function endpoint
-    const endpoint = "https://jtq9ytgg2b.execute-api.us-east-1.amazonaws.com/prod/storeData";
+    const endpoint = "";
 
     try {
         // Make sure dataToSend.body is a string, not an object
