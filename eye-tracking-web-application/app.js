@@ -20,6 +20,7 @@ export class GazeDataCollector {
         webgazer.showVideo(false);
         webgazer.showFaceOverlay(false);
         webgazer.showFaceFeedbackBox(false);
+        webgazer.showPredictionPoints(false)
     }
 
     startTracking() {
@@ -31,7 +32,7 @@ export class GazeDataCollector {
                     this.collectGazeData(prediction.x, prediction.y);
                 }
             });
-        }, 100); // Every 100ms (1/10th of a second)
+        }, 100); 
     }
 
     stopTracking() {
@@ -77,41 +78,36 @@ function throttle(func, limit) {
 
 class CacheManager {
     constructor() {
-        // Initialization can go here if needed
+        
     }
 
-    // Method to clear local storage
     clearLocalStorage() {
         localStorage.clear();
         console.log("Local storage cleared.");
     }
 
-    // Method to clear session storage
     clearSessionStorage() {
         sessionStorage.clear();
         console.log("Session storage cleared.");
     }
 
-    // Method to clear all cookies
     clearCookies() {
         const cookies = document.cookie.split(";");
 
         for (let cookie of cookies) {
             const eqPos = cookie.indexOf("=");
             const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-            // Set the cookie's expiration to a past date to delete it
             document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;";
         }
 
         console.log("All cookies cleared.");
     }
 
-    // Method to unregister service workers
     clearServiceWorkers() {
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.getRegistrations().then((registrations) => {
                 for (let registration of registrations) {
-                    registration.unregister(); // Unregister each service worker
+                    registration.unregister(); 
                     console.log("Service worker unregistered:", registration);
                 }
             }).catch((error) => {
@@ -120,7 +116,6 @@ class CacheManager {
         }
     }
 
-    // Method to clear everything at once (storage, cookies, and service workers)
     clearAllCaches() {
         this.clearLocalStorage();
         this.clearSessionStorage();
@@ -132,10 +127,10 @@ class CacheManager {
 class EyeTrackingApp {
     constructor() {
         this.gazeDataCollector = new GazeDataCollector();
-        this.cacheManager = new CacheManager();  // Initialize the CacheManager
+        this.cacheManager = new CacheManager(); 
         this.totalClicks = 0;
-        this.maxClicks = 5; // Set the number of clicks for calibration
-        this.dotSize = 80; // Increased size for visibility of number
+        this.maxClicks = 5; 
+        this.dotSize = 80; 
         this.timer = 0;
         this.interval = null;
 
@@ -147,7 +142,6 @@ class EyeTrackingApp {
     }
 
     startApp() {
-        // Clear all caches, cookies, and service workers when the app starts
         this.cacheManager.clearAllCaches();
 
         document.getElementById('startButton').addEventListener('click', () => {
@@ -179,11 +173,9 @@ class EyeTrackingApp {
         dot.style.backgroundColor = 'red';
         dot.disabled = false;
 
-        // Set the inner text of the dot to the remaining clicks
         let remainingClicks = this.maxClicks - this.totalClicks;
         dot.innerText = remainingClicks;
 
-        // Add the click handler
         dot.onclick = () => this.calibrate(randomX + this.dotSize / 2, randomY + this.dotSize / 2);
     }
 
@@ -193,21 +185,19 @@ class EyeTrackingApp {
 
         const dot = document.querySelector('.calibration-button');
 
-        // Trigger the pop animation
         dot.classList.add('pop-animation');
 
-        // Remove the animation class after the animation ends
         dot.addEventListener('animationend', () => {
             dot.classList.remove('pop-animation');
         });
 
-        // Check if the user has reached the max number of clicks
+       
         if (this.totalClicks >= this.maxClicks) {
             this.endCalibration();
         } else {
             setTimeout(() => {
-                this.placeNextDot(); // Place the next dot after animation
-            }, 200);  // Slight delay to match animation time
+                this.placeNextDot(); 
+            }, 200);  
         }
     }
 
