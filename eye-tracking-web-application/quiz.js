@@ -82,37 +82,26 @@ function loadRandomQuestion() {
         imageContainer.style.display = 'none';
         answerContainer.style.display = 'flex';
         questionText.style.display = 'block';
-        questionText.textContent = "On a scale of 1-10, 1 being continue driving, 5 being drive with caution, 10 being stop immediately or remain stopped. Given the environment (pedestrians, other cars, stoplights), how should the vehicle proceed?";
+        questionText.textContent = "On a scale of 1-10, 1 being stop immediately or remain stopped, 5 being drive with caution, and 10 being continue driving. Given the previous driving environment (pedestrians, other cars, stoplights), how should the vehicle proceed?";
         gazeDataCollector.stopTracking();
 
         answerButtons.forEach((button, index) => {
-            const value = index + 1;
             button.style.display = 'block';
-            button.style.backgroundColor = getButtonColor(value);
-            button.onclick = () => recordAnswer(value, randomIndex);
+            button.onclick = () => recordAnswer(index + 1, randomIndex);
         });
-    }, 7000); // 7 seconds
+    }, 10000);
 }
 
-function getButtonColor(value) {
-    if (value === 1) return 'red';
-    if (value === 5) return 'yellow';
-    if (value === 10) return 'green';
-
-    if (value < 5) {
-        const ratio = (value - 1) / 4;
-        return `rgb(${255 - (ratio * 255)}, ${ratio * 255}, 0)`;
-    } else {
-        const ratio = (value - 5) / 5;
-        return `rgb(${255 * (1 - ratio)}, ${255 - (ratio * 55)}, ${ratio * 255})`;
-    }
-}
 
 async function recordAnswer(answer, randomIndex) {
     const currentData = quizData[randomIndex];
-
     const collectedData = gazeDataCollector.getCollectedData();
 
+    // Provide visual feedback for the selected button
+    const selectedButton = document.getElementById(`answer${answer}`);
+    selectedButton.classList.add('selected');
+
+    // Disable all buttons to prevent multiple selections
     answerButtons.forEach(button => {
         button.disabled = true;
     });
@@ -134,6 +123,10 @@ async function recordAnswer(answer, randomIndex) {
     }
 
     setTimeout(() => {
+        // Remove the 'selected' class from the button
+        selectedButton.classList.remove('selected');
+
+        // Re-enable all buttons
         answerButtons.forEach(button => {
             button.disabled = false;
         });
@@ -143,7 +136,7 @@ async function recordAnswer(answer, randomIndex) {
         } else {
             finishQuiz();
         }
-    }, 2000);
+    }, 1000);
 }
 
 function finishQuiz() {
