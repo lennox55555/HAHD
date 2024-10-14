@@ -3,68 +3,52 @@ import { sendDataToAWS } from './awsUploader.js';
 export class GazeDataCollector {
     constructor() {
         this.gazeData = [];
-        this.mouseData = [];
         this.trackingInterval = null;
-        this.startTime = null;
-        this.isTracking = false; // To prevent double tracking
+        this.isTracking = false;
     }
 
     init() {
         webgazer
             .setRegression('ridge')
             .setGazeListener((data, elapsedTime) => {
-                if (!data || !this.isTracking) return;
-                this.collectGazeData(data.x, data.y, elapsedTime);
+                if (data && this.isTracking) {
+                    this.collectGazeData(data.x, data.y);
+                }
             })
             .begin();
 
-        // Disable unnecessary UI elements
         webgazer.showVideo(false);
         webgazer.showFaceOverlay(false);
         webgazer.showFaceFeedbackBox(false);
     }
 
-    collectGazeData(x, y, time) {
-        const currentTime = performance.now() - this.startTime;
-        this.gazeData.push({ x, y, time: currentTime });
-    }
-
-    collectMouseDataThrottled(event) {
-        const currentTime = performance.now() - this.startTime;
-        this.mouseData.push({
-            x: event.clientX,
-            y: event.clientY,
-            time: currentTime,
-        });
-    }
-
     startTracking() {
-        if (this.isTracking) return; // Avoid starting twice
         this.isTracking = true;
-        this.startTime = performance.now();
-        this.mouseMoveHandler = this.collectMouseDataThrottled.bind(this);
-
-        // Throttle mousemove event to reduce overhead
-        this.mouseMoveThrottled = throttle(this.mouseMoveHandler, 100); // Throttle to every 100ms
-        window.addEventListener('mousemove', this.mouseMoveThrottled);
+        this.gazeData = [];
+        this.trackingInterval = setInterval(() => {
+            webgazer.getCurrentPrediction().then(prediction => {
+                if (prediction) {
+                    this.collectGazeData(prediction.x, prediction.y);
+                }
+            });
+        }, 100); // Every 100ms (1/10th of a second)
     }
 
     stopTracking() {
         this.isTracking = false;
-        window.removeEventListener('mousemove', this.mouseMoveThrottled);
-        this.mouseMoveThrottled = null;
+        if (this.trackingInterval) {
+            clearInterval(this.trackingInterval);
+            this.trackingInterval = null;
+        }
     }
 
-    reset() {
-        this.gazeData.length = 0; // Clear the arrays instead of reallocating
-        this.mouseData.length = 0;
-        this.startTime = performance.now();
+    collectGazeData(x, y) {
+        this.gazeData.push({ x, y, time: Date.now() });
     }
 
     getCollectedData() {
         return {
             gazeData: this.gazeData,
-            mouseData: this.mouseData,
             timestamp: Date.now(),
         };
     }
@@ -159,7 +143,6 @@ class EyeTrackingApp {
         this.startApp = this.startApp.bind(this);
         this.calibrate = this.calibrate.bind(this);
         this.placeNextDot = this.placeNextDot.bind(this);
-        this.startTimer = this.startTimer.bind(this);
         this.endCalibration = this.endCalibration.bind(this);
     }
 
@@ -172,7 +155,7 @@ class EyeTrackingApp {
 
             this.createDot();
             this.placeNextDot();
-            this.startTimer();
+
         });
     }
 
@@ -197,7 +180,7 @@ class EyeTrackingApp {
         dot.disabled = false;
 
         // Set the inner text of the dot to the remaining clicks
-        const remainingClicks = this.maxClicks - this.totalClicks;
+        let remainingClicks = this.maxClicks - this.totalClicks;
         dot.innerText = remainingClicks;
 
         // Add the click handler
@@ -229,21 +212,13 @@ class EyeTrackingApp {
     }
 
 
-    startTimer() {
-        this.startTime = Date.now();
-        this.interval = setInterval(() => {
-            this.timer += 1;
-            document.getElementById('timer').innerText = `Time: ${this.timer}s`;
-        }, 1000);
-    }
+
 
     endCalibration() {
         clearInterval(this.interval);
-        const finalTime = (Date.now() - this.startTime) / 1000;
         const dot = document.querySelector('.calibration-button');
         if (dot) dot.style.display = 'none';
         document.getElementById('completionScreen').style.display = 'block';
-        document.getElementById('finalTime').innerText = `Your time: ${finalTime.toFixed(2)} seconds`;
 
         this.gazeDataCollector.init();
         this.gazeDataCollector.startTracking();
