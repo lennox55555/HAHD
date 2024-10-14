@@ -1,158 +1,155 @@
 import { sendDataToAWS } from './awsUploader.js';
-import { GazeDataCollector } from './app.js'; // Importing GazeDataCollector properly
+import { GazeDataCollector } from './app.js';
 
-// Define the quiz data with questions, answers, and correct answers
-const quizData = [
-    {
-        image: 'images/0001.png',  // Ensure this file exists in the correct directory
-        answers: ['Dog', 'Cat', 'Elephant', 'Horse', 'Rabbit', "I don't know"],
-        correct: 'Dog'
-    },
-    {
-        image: 'images/0002.png',
-        answers: ['Dog', 'Cat', 'Elephant', 'Horse', 'Rabbit', "I don't know"],
-        correct: 'Cat'
-    },
-    {
-        image: 'images/0003.png',  // Ensure this file exists in the correct directory
-        answers: ['Dog', 'Cat', 'Elephant', 'Horse', 'Rabbit', "I don't know"],
-        correct: 'Dog'
-    },
-    {
-        image: 'images/0004.png',
-        answers: ['Dog', 'Cat', 'Elephant', 'Horse', 'Rabbit', "I don't know"],
-        correct: 'Cat'
-    },
-    {
-        image: 'images/0005.png',  // Ensure this file exists in the correct directory
-        answers: ['Dog', 'Cat', 'Elephant', 'Horse', 'Rabbit', "I don't know"],
-        correct: 'Dog'
-    },
-    {
-        image: 'images/0006.png',
-        answers: ['Dog', 'Cat', 'Elephant', 'Horse', 'Rabbit', "I don't know"],
-        correct: 'Cat'
-    },
-    {
-        image: 'images/0007.png',  // Ensure this file exists in the correct directory
-        answers: ['Dog', 'Cat', 'Elephant', 'Horse', 'Rabbit', "I don't know"],
-        correct: 'Dog'
-    },
-    {
-        image: 'images/0008.png',
-        answers: ['Dog', 'Cat', 'Elephant', 'Horse', 'Rabbit', "I don't know"],
-        correct: 'Cat'
-    },
-    {
-        image: 'images/0009.png',
-        answers: ['Dog', 'Cat', 'Elephant', 'Horse', 'Rabbit', "I don't know"],
-        correct: 'Dog'
-    },
-    {
-        image: 'images/0010.png',
-        answers: ['Dog', 'Cat', 'Elephant', 'Horse', 'Rabbit', "I don't know"],
-        correct: 'Cat'
-    },
-];
-
-let currentQuestion = 0;
+let quizData = [];
 let score = 0;
-const totalQuestions = quizData.length;
 const gazeDataCollector = new GazeDataCollector();
 
 // Get elements from DOM
 const questionImage = document.getElementById('questionImage');
-const answerButtons = [
-    document.getElementById('answer1'),
-    document.getElementById('answer2'),
-    document.getElementById('answer3'),
-    document.getElementById('answer4'),
-    document.getElementById('answer5'),
-    document.getElementById('answer6')
-];
+const imageContainer = document.getElementById('imageContainer');
+const answerContainer = document.getElementById('answerContainer');
+const questionText = document.getElementById('questionText');
+const answerButtons = Array.from({ length: 10 }, (_, i) => document.getElementById(`answer${i + 1}`));
 const quizContainer = document.getElementById('quizContainer');
 const quizTitle = document.getElementById('quizTitle');
 const startQuizButton = document.getElementById('startQuizButton');
-const completionScreen = document.getElementById('completionScreen'); // For hiding after quiz starts
+const completionScreen = document.getElementById('completionScreen');
+
+// Load quiz data from the JSON file
+function loadQuizData() {
+    return fetch('quizData.json')
+        .then(response => response.json())
+        .then(data => {
+            quizData = data;
+            initializeQuiz();
+        })
+        .catch(error => {
+            console.error('Error loading quiz data:', error);
+        });
+}
 
 function initializeQuiz() {
-    // Initialize gaze tracking
     gazeDataCollector.init();
-
-    // Start the quiz
     startQuizButton.addEventListener('click', startQuiz);
+    addHoverEffects();
+}
+
+function addHoverEffects() {
+    answerButtons.forEach(button => {
+        button.addEventListener('mouseenter', () => {
+            answerButtons.forEach(btn => {
+                if (btn !== button) {
+                    btn.style.opacity = '0.5';
+                }
+            });
+        });
+        button.addEventListener('mouseleave', () => {
+            answerButtons.forEach(btn => {
+                btn.style.opacity = '1';
+            });
+        });
+    });
 }
 
 function startQuiz() {
     completionScreen.style.display = 'none';
     startQuizButton.style.display = 'none';
-
-    quizTitle.style.display = 'block';
-    quizContainer.style.display = 'block';
-
-    loadQuestion();
+    quizTitle.style.display = 'none';
+    quizContainer.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    loadRandomQuestion();
 }
 
-function loadQuestion() {
-    const currentData = quizData[currentQuestion];
+function loadRandomQuestion() {
+    const randomIndex = Math.floor(Math.random() * quizData.length);
+    const currentData = quizData[randomIndex];
 
-    // Hide answer buttons initially
+    // Reset display
+    imageContainer.style.display = 'flex';
+    answerContainer.style.display = 'none';
+    questionText.style.display = 'none';
     answerButtons.forEach(button => button.style.display = 'none');
 
-    // Display the image and reset size to take up the entire page
     questionImage.src = currentData.image;
     questionImage.style.display = 'block';
-    questionImage.style.width = '100vw';  // Full viewport width
-    questionImage.style.height = '100vh'; // Full viewport height
 
-    // Reset and start tracking gaze data for the new question
-    gazeDataCollector.reset();
+    // Start eye tracking
     gazeDataCollector.startTracking();
 
-    // Display the image for 7 seconds, then hide the image and show the answer buttons
+    // Set timeout to hide image, stop tracking, and show answers
     setTimeout(() => {
-        // Hide the image after 7 seconds
-        questionImage.style.display = 'none';
+        imageContainer.style.display = 'none';
+        answerContainer.style.display = 'flex';
+        questionText.style.display = 'block';
+        questionText.textContent = "On a scale of 1-10, 1 being continue driving, 5 being drive with caution, 10 being stop immediately or remain stopped. Given the environment (pedestrians, other cars, stoplights), how should the vehicle proceed?";
+        gazeDataCollector.stopTracking();
 
-        // Show answer buttons and assign click handlers
-        currentData.answers.forEach((answer, index) => {
-            answerButtons[index].innerText = answer;
-            answerButtons[index].style.display = 'block';  // Show the answer buttons
-            answerButtons[index].onclick = () => checkAnswer(answer);
+        answerButtons.forEach((button, index) => {
+            const value = index + 1;
+            button.style.display = 'block';
+            button.style.backgroundColor = getButtonColor(value);
+            button.onclick = () => recordAnswer(value, randomIndex);
         });
-    }, 10000); // 7 seconds delay before showing the questions
+    }, 7000); // 7 seconds
 }
 
-function checkAnswer(answer) {
-    const currentData = quizData[currentQuestion];
+function getButtonColor(value) {
+    if (value === 1) return 'red';
+    if (value === 5) return 'yellow';
+    if (value === 10) return 'green';
 
-    // Stop tracking and send gaze data to AWS for the current question
-    gazeDataCollector.stopTracking();
-
-    const dataToSend = {
-        body: JSON.stringify({
-            question: currentQuestion,
-            answerGiven: answer,
-            correctAnswer: currentData.correct,
-            gazeTracking: gazeDataCollector.getCollectedData(),
-        })
-    };
-
-    sendDataToAWS(dataToSend);
-
-    // Move to the next question
-    currentQuestion++;
-    if (currentQuestion < totalQuestions) {
-        loadQuestion();
+    if (value < 5) {
+        const ratio = (value - 1) / 4;
+        return `rgb(${255 - (ratio * 255)}, ${ratio * 255}, 0)`;
     } else {
-        finishQuiz();
+        const ratio = (value - 5) / 5;
+        return `rgb(${255 * (1 - ratio)}, ${255 - (ratio * 55)}, ${ratio * 255})`;
     }
 }
 
+async function recordAnswer(answer, randomIndex) {
+    const currentData = quizData[randomIndex];
 
+    const collectedData = gazeDataCollector.getCollectedData();
 
-function finishQuiz() {
-    alert(`Quiz completed! Your score is ${score} out of ${totalQuestions}.`);
+    answerButtons.forEach(button => {
+        button.disabled = true;
+    });
+
+    // Prepare data to send to AWS
+    const dataToSend = {
+        questionImage: currentData.image,
+        selectedAnswer: answer,
+        gazeData: collectedData.gazeData,
+        timestamp: collectedData.timestamp
+    };
+
+    // Send data to AWS
+    try {
+        await sendDataToAWS({ body: dataToSend });
+        console.log('Data successfully sent to AWS');
+    } catch (error) {
+        console.error('Error sending data to AWS:', error);
+    }
+
+    setTimeout(() => {
+        answerButtons.forEach(button => {
+            button.disabled = false;
+        });
+
+        if (quizData.length > 0) {
+            loadRandomQuestion();
+        } else {
+            finishQuiz();
+        }
+    }, 2000);
 }
 
-document.addEventListener('DOMContentLoaded', initializeQuiz);
+function finishQuiz() {
+    quizContainer.style.display = 'none';
+    completionScreen.style.display = 'block';
+    document.getElementById('finalScore').textContent = "Thank you for completing the survey!";
+}
+
+document.addEventListener('DOMContentLoaded', loadQuizData);
