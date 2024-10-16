@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Autonomous Driving Decision Survey</title>
+    <!-- Include WebGazer.js via CDN -->
     <script src="https://webgazer.cs.brown.edu/webgazer.js"></script>
-    <link rel="stylesheet" href="styles.css?v=1.2"> 
+    <link rel="stylesheet" href="styles.css?v=1.2"> <!-- Updated version number -->
 </head>
 
 <body>
-
+<!-- Starting Screen -->
 <div id="startScreen" style="text-align: center; padding: 20px;">
     <h2>Welcome to the Autonomous Driving Decision Survey</h2>
     <p id="welcomeText">Before we begin, you need to calibrate the eye tracker. Please ensure that you allow camera access, sit up straight, and make sure there is appropriate lighting in your environment. You will be asked to click on 30 dots on the screen before starting the survey.</p>
@@ -17,7 +18,7 @@
 </div>
 
 
-
+<!-- Completion Screen (will show after calibration) -->
 <div id="completionScreen" style="display: none; text-align: center;">
     <h2>Calibration Complete!</h2>
     <h3>Survey Instructions:</h3>
@@ -34,6 +35,7 @@
 
 <h1 id="quizTitle" style="display: none;">Autonomous Driving Decision Survey</h1>
 
+<!-- Quiz Container (hidden initially) -->
 <div id="quizContainer" style="display: none;">
     <div id="imageContainer">
         <img id="questionImage" src="" alt="Driving Scenario" />
@@ -53,7 +55,6 @@
     </div>
 </div>
 
-<script type="module" src="app.js?v=1.2"></script> 
-<script type="module" src="quiz.js?v=1.2"></script> 
-</body>
+<script type="module" src="app.js?v=1.2"></script> <!-- Updated version number -->
+<script type="module" src="quiz.js?v=1.4"></script></body>
 </html>
