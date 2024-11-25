@@ -1,96 +1,64 @@
 # Human-Aligned Hazardous Driving Detection Dataset
 
-## Executive Summary
-This project collects and analyzes eye-tracking data to understand human perception and decision-making in driving scenarios. By tracking how humans visually process road hazards, we aim to improve autonomous vehicle systems to make decisions that better align with human judgment.
+## Executive Summary:
+The advancement of autonomous vehicles has primarily focused on object detection and road segmentation, yet there remains a crucial gap in understanding how human drivers process and respond to complex road scenarios. This project addresses this gap by creating a comprehensive dataset that captures human visual attention patterns during hazard detection in urban driving scenes. Through a web-based eye-tracking application, we collect detailed gaze data as participants analyze potential road hazards, providing insights into human decision-making processes that could inform more intuitive autonomous driving systems.
 
-### Motivation
-Current autonomous vehicle systems rely heavily on object detection but often lack human-like judgment in complex scenarios. While datasets like Cityscapes provide excellent visual data for urban scenes, they don't capture how humans process and react to these situations. This project bridges this gap by collecting human attention data through eye-tracking.
+Our dataset uniquely combines eye-tracking data with scenes from the Cityscapes dataset, creating a bridge between computer vision capabilities and human perception. This integration allows for the development of autonomous systems that not only detect objects but also prioritize attention in ways that align with human judgment. The data collection process has yielded over 1,000 viewing sessions, each containing up to 90 high-precision gaze coordinates with temporal information, providing a rich foundation for understanding human attention patterns in driving scenarios.
 
-### Potential Applications
-- Training autonomous vehicles to identify hazards in a human-like manner
-- Improving driver monitoring systems
-- Developing better driver assistance technologies
-- Enhancing safety systems in semi-autonomous vehicles
-- Studying human attention patterns in driving scenarios
+The potential impact of this research extends beyond autonomous vehicles into broader applications in transportation safety and human-computer interaction. The collected data can enhance driver monitoring systems, improve driver training programs, and contribute to the development of more intuitive driver assistance technologies. Furthermore, this dataset provides valuable insights for researchers studying human attention patterns and decision-making processes in critical situations.
 
-## Description of Data
+## File Structure:
+```bash
+|── Hazardous-Driving-Detection/
+|   ├── Data/
+|   │   ├── eye_gaze_research/
+|   │   ├── __init__.py
+|   │   ├── cityscapes_mapping.csv
+|   │   └── main.py
+|   │
+|   ├── DataAnalysis/
+|   │   ├── __init__.py
+|   │   └── main.py
+|   │
+|   ├── DrivingWebApplication/
+|   │   ├── images/
+|   │   ├── app.js
+|   │   ├── awsUploader.js
+|   │   ├── index.html
+|   │   ├── quiz.js
+|   │   └── styles.css
+|   │
+|   ├── Cityscapes dataset.pdf
+|   ├── README.md
+|   └── requirements.txt
+```
 
-### Data Collection Method
-Data is collected through a web-based application ([Hazardous Detection Web App](https://lennoxanderson.com/HazardousDetection/)) that:
-1. Calibrates user's eyes to the screen
-2. Shows urban driving scenes from Cityscapes dataset
-3. Tracks eye movements for 7 seconds per image
-4. Records user's hazard identification decisions
+## Description of Data:
+Our data collection utilizes a sophisticated web-based platform accessible at Hazardous Detection Web App. The application implements a careful protocol where each participant undergoes eye calibration before viewing urban driving scenes from the Cityscapes dataset. During each seven-second viewing period, the system records precise eye movements and gaze patterns, followed by participant feedback on perceived hazards.
+The dataset encompasses comprehensive eye-tracking data including high-frequency X and Y gaze coordinates, precise timestamps, viewing durations, and hazard selection coordinates. This information is complemented by rich metadata containing test set identifiers, image references, and detailed session information. The image data consists of a carefully curated subset of the Cityscapes dataset, organized into nine distinct test sets that represent diverse urban driving scenarios.
 
-### Dataset Contents
-1. Eye-tracking Data:
-   - X, Y gaze coordinates (sampled at high frequency)
-   - Timestamps for each gaze point
-   - Viewing duration
-   - Hazard selection coordinates
+All data is structured for research accessibility, with gaze data stored in CSV format and images maintained in high-quality JPG format. A dedicated mapping file provides clear relationships between original Cityscapes identifiers and our study's naming conventions, ensuring seamless integration with existing research frameworks.
 
-2. Metadata:
-   - Test set identifiers
-   - Image references
-   - Session information
-   - User response times
+## Power Analysis Results:
+The data collection strategy aims to build a dataset sufficient for meaningful machine learning analysis to enventually trained. Initial targets were set at 15,000 gaze samples/questions to ensure adequate representation across all decision classes. Currently, the dataset includes 1,015 completed viewing sessions, with each session capturing up to 90 distinct gaze points. This data collection provides information about viewing patterns.
 
-3. Image Data:
-   - Modified subset of Cityscapes dataset
-   - Organized into 9 test sets
-   - Focus on urban driving scenarios
-
-### Data Format
-- Gaze data stored in CSV format
-- Images stored in JPG format
-- Mapping file links original Cityscapes names to study identifiers
-
-## Power Analysis Results
-Target Data Collection:
-- Minimum 15,000 gaze samples/questions
-- Current collection: 1,015 completed viewings
-- Multiple gaze points per viewing (up to 90 points each)
-- Four primary decision classes (stop, slow down, speed up, continue)
+The dataset encompasses four primary decision classes representing common driving responses: stopping, slowing down, speeding up, and continuing at current speed. The current collection volume allows for detailed analysis of attention patterns within each decision category, while ongoing data collection continues to enhance the dataset's statistical power.
 
 ## Exploratory Data Analysis
-Available visualizations include:
-1. Aggregate Attention Heatmaps
-   - Shows overall focus areas across all viewers
-   - Identifies commonly perceived hazard zones
+Our analysis reveals complex patterns in how participants visually process driving scenes. Through aggregate attention heatmaps, we've identified common focus areas that attract immediate attention across multiple viewers. These heatmaps highlight crucial zones where potential hazards are most frequently detected, providing insights into collective human perception of road safety.
 
-2. Individual Viewer Patterns
-   - Different colors for each viewer's gaze path
-   - Helps identify variation in attention patterns
-
-3. Temporal Progression
-   - Shows how attention moves over time
-   - Indicates initial vs. subsequent focus areas
+Individual viewer pattern analysis reveals fascinating variations in how different participants approach hazard detection. Using color-coded visualization techniques, we can track unique gaze paths and attention patterns, showing how different viewers prioritize various elements within the same scene. This analysis helps identify both common patterns and individual variations in hazard detection strategies.
+Temporal progression analysis demonstrates how attention shifts during the viewing period, from initial focus areas to subsequent points of interest. This timeline-based visualization helps understand the sequence of human attention in processing road scenes, crucial information for developing more intuitive autonomous systems.
 
 ## Code Repository
-The data collection and analysis code is available in two repositories:
-1. [Data Collection Web Application](https://lennoxanderson.com/HazardousDetection/)
-2. [Data Processing and Analysis Tools](https://github.com/YourUsername/hazardous-driving-analysis)
+Our research implementation is publicly accessible through two main repositories. The first contains the web-based eye-tracking application, available at our Hazardous Detection Web App. This platform handles the core data collection process. The second repository houses our Data Processing and Analysis Tools, providing comprehensive utilities for data processing, visualization, and analysis.
 
 ## Ethics Statement
-This project adheres to ethical data collection practices:
-- Voluntary participation
-- Clear consent process before eye tracking
-- No personal information collected
-- Transparent data usage purposes
-- Option to withdraw at any time
-- Data anonymization
-- Safe data storage and handling
+Our research prioritizes ethical data collection and participant privacy. Every aspect of the data collection process adheres to strict ethical guidelines, beginning with voluntary participation and explicit consent for eye tracking. We maintain complete transparency about data usage purposes while collecting no personal identification information. Participants retain the right to withdraw at any time, and all data undergoes thorough anonymization before storage or analysis.
 
-The collected data aims to improve road safety and autonomous vehicle systems while respecting user privacy and consent.
+The data storage and handling procedures follow rigorous security protocols to ensure participant privacy and data integrity. Our primary goal remains the advancement of road safety and autonomous vehicle systems, conducted with unwavering respect for participant privacy and research ethics.
 
-## License
-This project is licensed under Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0).
-
-You are free to:
-- Share and adapt the material for non-commercial purposes
-- Must provide appropriate attribution
-
-### Citations
+## Citations
 For using this dataset:
 ```bibtex
 @misc{hazardous_driving_gaze_2024,
@@ -113,7 +81,3 @@ For Cityscapes dataset:
 }
 ```
 
-## Acknowledgments
-- Cityscapes Dataset for urban driving scenes
-- All participants who contributed eye-tracking data
-- Duke University for project support
