@@ -7,6 +7,75 @@ The dataset combines eyetracking data with scenes from the Cityscapes dataset, c
 
 The potential impact of this research extends beyond autonomous vehicles into broader applications in transportation safety and HCI. The collected data can enhance driver monitoring systems, improve driver training programs, and contribute to the development of more intuitive driver assistance technologies. Furthermore, this dataset provides valuable insights for researchers studying human attention patterns and processes in critical situations.
 
+## Prerequisites
+
+Before getting started, you'll need:
+1. A Hugging Face account and access token
+   - Sign up at [Hugging Face](https://huggingface.co/)
+   - Get your token from [Access Tokens](https://huggingface.co/settings/tokens)
+
+2. A Cityscapes account
+   - Register at [Cityscapes](https://www.cityscapes-dataset.com/)
+   - You'll need credentials to download the dataset
+
+3. Python 3.8 or higher
+
+## Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/YourUsername/hazardous-driving-analysis.git
+cd hazardous-driving-analysis
+```
+
+2. Create and activate a virtual environment:
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
+
+3. Install required packages:
+```bash
+pip install -r requirements.txt
+```
+
+## Usage
+
+### 1. Data Setup
+First, download and process the required datasets:
+
+```bash
+cd Data
+python main.py
+```
+
+This script will:
+- Download the eye-tracking data from Hugging Face
+- Download necessary images from Cityscapes
+- Process and organize the data
+
+When prompted:
+- Enter your Hugging Face token
+- Enter your Cityscapes credentials
+
+### 2. Visualization
+After data setup is complete, generate visualizations:
+
+```bash
+cd ../DataAnalysis
+python main.py
+```
+
+This will create three types of visualizations:
+1. Aggregate heatmaps showing overall attention patterns
+2. Viewer-separated heatmaps showing individual viewing patterns
+3. Temporal heatmaps showing gaze progression over time
+
+Options:
+```bash
+python main.py --base-dir /custom/path --output-dir /output/path --debug
+```
+
 ## File Structure:
 ```bash
 |── Hazardous-Driving-Detection/
