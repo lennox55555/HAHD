@@ -1,141 +1,119 @@
-# Hazardous Driving Eye Gaze Dataset & Analysis
+# Human-Aligned Hazardous Driving Detection Dataset
 
-This repository contains tools for downloading, processing, and analyzing eye-tracking data collected during a hazardous driving detection study. The eye-tracking data was collected while participants viewed images from the Cityscapes dataset and identified potential hazards.
+## Executive Summary
+This project collects and analyzes eye-tracking data to understand human perception and decision-making in driving scenarios. By tracking how humans visually process road hazards, we aim to improve autonomous vehicle systems to make decisions that better align with human judgment.
 
-## Web Application
-The eye-tracking data was collected using a custom web application available at:
-[Hazardous Detection Web App](https://lennoxanderson.com/HazardousDetection/)
+### Motivation
+Current autonomous vehicle systems rely heavily on object detection but often lack human-like judgment in complex scenarios. While datasets like Cityscapes provide excellent visual data for urban scenes, they don't capture how humans process and react to these situations. This project bridges this gap by collecting human attention data through eye-tracking.
 
-This application tracks users' gaze patterns as they identify potential hazards in urban driving scenarios from the Cityscapes dataset.
+### Potential Applications
+- Training autonomous vehicles to identify hazards in a human-like manner
+- Improving driver monitoring systems
+- Developing better driver assistance technologies
+- Enhancing safety systems in semi-autonomous vehicles
+- Studying human attention patterns in driving scenarios
 
-## Dataset
-The eye-tracking dataset is hosted on Hugging Face:
-[Hazardous Driving Eye Gaze Dataset](https://huggingface.co/datasets/Lennyox/hazardous_driving_eye_gaze)
+## Description of Data
 
-The dataset contains:
-- Gaze coordinates (X, Y positions)
-- Timestamps for each gaze point
-- Selected hazard locations
-- Test set and image identifiers
-- Session metadata
+### Data Collection Method
+Data is collected through a web-based application ([Hazardous Detection Web App](https://lennoxanderson.com/HazardousDetection/)) that:
+1. Calibrates user's eyes to the screen
+2. Shows urban driving scenes from Cityscapes dataset
+3. Tracks eye movements for 7 seconds per image
+4. Records user's hazard identification decisions
 
-## Prerequisites
+### Dataset Contents
+1. Eye-tracking Data:
+   - X, Y gaze coordinates (sampled at high frequency)
+   - Timestamps for each gaze point
+   - Viewing duration
+   - Hazard selection coordinates
 
-Before getting started, you'll need:
-1. A Hugging Face account and access token
-   - Sign up at [Hugging Face](https://huggingface.co/)
-   - Get your token from [Access Tokens](https://huggingface.co/settings/tokens)
+2. Metadata:
+   - Test set identifiers
+   - Image references
+   - Session information
+   - User response times
 
-2. A Cityscapes account
-   - Register at [Cityscapes](https://www.cityscapes-dataset.com/)
-   - You'll need credentials to download the dataset
+3. Image Data:
+   - Modified subset of Cityscapes dataset
+   - Organized into 9 test sets
+   - Focus on urban driving scenarios
 
-3. Python 3.8 or higher
+### Data Format
+- Gaze data stored in CSV format
+- Images stored in JPG format
+- Mapping file links original Cityscapes names to study identifiers
 
-## Installation
+## Power Analysis Results
+Target Data Collection:
+- Minimum 15,000 gaze samples/questions
+- Current collection: 1,015 completed viewings
+- Multiple gaze points per viewing (up to 90 points each)
+- Four primary decision classes (stop, slow down, speed up, continue)
 
-1. Clone the repository:
-```bash
-git clone https://github.com/YourUsername/hazardous-driving-analysis.git
-cd hazardous-driving-analysis
-```
+## Exploratory Data Analysis
+Available visualizations include:
+1. Aggregate Attention Heatmaps
+   - Shows overall focus areas across all viewers
+   - Identifies commonly perceived hazard zones
 
-2. Create and activate a virtual environment:
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
+2. Individual Viewer Patterns
+   - Different colors for each viewer's gaze path
+   - Helps identify variation in attention patterns
 
-3. Install required packages:
-```bash
-pip install -r requirements.txt
-```
+3. Temporal Progression
+   - Shows how attention moves over time
+   - Indicates initial vs. subsequent focus areas
 
-## Usage
+## Code Repository
+The data collection and analysis code is available in two repositories:
+1. [Data Collection Web Application](https://lennoxanderson.com/HazardousDetection/)
+2. [Data Processing and Analysis Tools](https://github.com/YourUsername/hazardous-driving-analysis)
 
-### 1. Data Setup
-First, download and process the required datasets:
+## Ethics Statement
+This project adheres to ethical data collection practices:
+- Voluntary participation
+- Clear consent process before eye tracking
+- No personal information collected
+- Transparent data usage purposes
+- Option to withdraw at any time
+- Data anonymization
+- Safe data storage and handling
 
-```bash
-cd Data
-python main.py
-```
-
-This script will:
-- Download the eye-tracking data from Hugging Face
-- Download necessary images from Cityscapes
-- Process and organize the data
-
-When prompted:
-- Enter your Hugging Face token
-- Enter your Cityscapes credentials
-
-### 2. Visualization
-After data setup is complete, generate visualizations:
-
-```bash
-cd ../DataAnalysis
-python main.py
-```
-
-This will create three types of visualizations:
-1. Aggregate heatmaps showing overall attention patterns
-2. Viewer-separated heatmaps showing individual viewing patterns
-3. Temporal heatmaps showing gaze progression over time
-
-Options:
-```bash
-python main.py --base-dir /custom/path --output-dir /output/path --debug
-```
-
-## Project Structure
-```
-project_root/
-├── Data/
-│   ├── main.py           # Data download and setup
-│   └── __init__.py
-├── DataAnalysis/
-│   ├── main.py           # Visualization and analysis
-│   └── __init__.py
-└── requirements.txt
-```
-
-## Dataset Details
-
-### Cityscapes Images
-This study uses a subset of images from the Cityscapes dataset, focusing on urban driving scenarios. The images are organized into test sets (testSet01 through testSet09) and were selected based on their potential to contain hazardous situations.
-
-### Eye-tracking Data
-The gaze data includes:
-- Fine-grained gaze coordinates (up to 90 points per viewing)
-- Temporal information for each gaze point
-- Viewer's hazard selections
-- Session metadata and timestamps
-
-## Output
-Visualizations are saved to the `eye_gaze_research/visualizations` directory by default, including:
-- High-resolution heatmaps (300 DPI)
-- Multiple visualization types per image
-- Detailed filename mapping to original Cityscapes images
-
-## Contributing
-Contributions are welcome! Please feel free to submit pull requests.
+The collected data aims to improve road safety and autonomous vehicle systems while respecting user privacy and consent.
 
 ## License
-This project is licensed under [Your License] - see the LICENSE file for details.
+This project is licensed under Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0).
 
-## Citation
-If you use this dataset or code in your research, please cite:
-```
+You are free to:
+- Share and adapt the material for non-commercial purposes
+- Must provide appropriate attribution
+
+### Citations
+For using this dataset:
+```bibtex
 @misc{hazardous_driving_gaze_2024,
     title={Hazardous Driving Eye Gaze Dataset},
     author={Anderson, Lennox},
     year={2024},
     publisher={Hugging Face},
-    url={https://huggingface.co/datasets/Lennyox/hazardous_driving_eye_gaze}
+    howpublished={\url{https://huggingface.co/datasets/Lennyox/hazardous_driving_eye_gaze}},
+    note={Creative Commons Attribution-NonCommercial 4.0 International License}
+}
+```
+
+For Cityscapes dataset:
+```bibtex
+@inproceedings{Cordts2016Cityscapes,
+    title={The Cityscapes Dataset for Semantic Urban Scene Understanding},
+    author={Cordts, Marius and Omran, Mohamed and Ramos, Sebastian and Rehfeld, Timo and Enzweiler, Markus and Benenson, Rodrigo and Franke, Uwe and Roth, Stefan and Schiele, Bernt},
+    booktitle={Proc. of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR)},
+    year={2016}
 }
 ```
 
 ## Acknowledgments
-- [Cityscapes Dataset](https://www.cityscapes-dataset.com/) for providing the urban scene images
-- All participants who contributed to the eye-tracking data collection
+- Cityscapes Dataset for urban driving scenes
+- All participants who contributed eye-tracking data
+- Duke University for project support
