@@ -50,22 +50,20 @@ class GazeVisualizer:
         logger.info(f"Each record has up to {len(self.gaze_columns)} gaze points")
 
         # Create custom colormaps
-        self.heatmap_cmap = LinearSegmentedColormap.from_list('custom',
-                                                              [(0, 0, 0, 0), (0, 1, 0, 0.7), (1, 1, 0, 0.7),
-                                                               (1, 0, 0, 0.7)])
+        self.heatmap_cmap = LinearSegmentedColormap.from_list('custom', [(0, 0, 0, 0), (0, 1, 0, 0.7), (1, 1, 0, 0.7),(1, 0, 0, 0.7)])
 
         # Colors for different viewers
         self.viewer_colors = [
-            (0.7, 0, 0.7, 0.5),  # Purple
-            (0, 0, 1, 0.5),  # Blue
-            (0, 0.7, 0, 0.5),  # Green
-            (1, 0.5, 0, 0.5),  # Orange
-            (0, 0.7, 0.7, 0.5),  # Cyan
-            (0.7, 0, 0, 0.5),  # Red
-            (0.5, 0.5, 0, 0.5),  # Olive
-            (0.5, 0, 0.5, 0.5),  # Purple-red
-            (0, 0.5, 0.5, 0.5),  # Teal
-            (0.7, 0.4, 0, 0.5),  # Brown
+            (0.7, 0, 0.7, 0.5), 
+            (0, 0, 1, 0.5),
+            (0, 0.7, 0, 0.5),
+            (1, 0.5, 0, 0.5),
+            (0, 0.7, 0.7, 0.5),
+            (0.7, 0, 0, 0.5),
+            (0.5, 0.5, 0, 0.5),
+            (0.5, 0, 0.5, 0.5),
+            (0, 0.5, 0.5, 0.5),
+            (0.7, 0.4, 0, 0.5),
         ]
 
     def get_valid_gazes(self, row):
