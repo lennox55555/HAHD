@@ -113,7 +113,7 @@ Individual viewer pattern analysis reveals fascinating variations in how differe
 Temporal progression analysis demonstrates how attention shifts during the viewing period, from initial focus areas to subsequent points of interest. This timeline based visualization helps understand the sequence of human attention in processing road scenes, crucial information for developing more intuitive autonomous systems.
 
 ## Ethics Statement
-The research prioritizes ethical data collection and participant privacy. Every aspect of the data collection process adheres to strict ethical guidelines, beginning with voluntary participation and explicit consent for eye tracking. 
+This research collects anonymized eye-tracking data during simulated driving scenarios. Data collection is strictly limited to gaze coordinates (X and Y positions), timestamps, and hazard selection responses. No personal identifiers, demographic information, or biometric data beyond gaze positions are recorded or stored. The web application informs participants about data collection scope..
 
 ## Citations
 For using this dataset:
