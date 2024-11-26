@@ -48,7 +48,7 @@ python main.py
 ```
 
 This script will:
-- Download the eye-tracking data from Hugging Face
+- Download the eyetracking data from Hugging Face
 - Download necessary images from Cityscapes
 - Process and organize the data
 
@@ -96,7 +96,7 @@ This will create three types of visualizations:
 ```
 
 ## Description of Data:
-The data collection utilizes a full stack Hazardous Detection Web App. The application implements a careful protocol where each participant undergoes eye calibration before viewing urban driving scenes from the Cityscapes dataset. During each 10 second viewing period, the system records precise eye movements and gaze patterns, followed by participant feedback on perceived hazards.
+The data collection utilizes a full stack Hazardous Detection Web App. The application implements a process where each participant undergoes eye calibration before viewing urban driving scenes from the Cityscapes dataset. During each 10 second viewing period, the application records gaze patterns, followed by participant feedback on perceived hazards.
 
 The dataset contains eyetracking data including X and Y gaze coordinates, timestamps, viewing durations, and hazard servity selection. This information is complemented by metadata containing test set identifiers, image references, and detailed session information. The image data consists of a carefully curated subset of the Cityscapes dataset, organized into nine test sets that represent diverse urban driving scenarios.
 
@@ -105,8 +105,8 @@ All data is structured for research accessibility, with gaze data stored in CSV 
 ## Power Analysis Results:
 The data collection strategy aims to build a dataset sufficient for meaningful machine learning analysis to enventually trained. Initial targets were set at 15,000 gaze samples/questions to ensure adequate representation across all decision classes. Currently, the dataset includes 1,015 completed viewing sessions, with each session capturing up to 90 distinct gaze points. This data collection provides information about viewing patterns.
 
-## Exploratory Data Analysis
-The analysis reveals complex patterns in how participants visually process driving scenes. Through aggregate attention heatmaps, we've identified common focus areas that attract immediate attention across multiple viewers. These heatmaps highlight zones where potential hazards are most frequently detected. This provids insights the collective human perception of road safety.
+## Exploratory Data Analysis (3 Types)
+The analysis reveals patterns in how participants visually process driving scenes. Through aggregate attention heatmaps, the analysis identifies common focus areas that attract immediate attention across multiple viewers. These heatmaps highlight zones where potential hazards are most frequently detected. This provids insights the collective human perception of road safety.
 
 Individual viewer pattern analysis reveals fascinating variations in how different participants approach hazard detection. Using visualization techniques, we can track unique gaze paths and attention patterns, showing how different viewers prioritize various elements within the same scene. This analysis helps identify both common patterns and individual variations in hazard detection strategies.
 
