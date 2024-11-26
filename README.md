@@ -112,6 +112,8 @@ Individual viewer pattern analysis reveals fascinating variations in how differe
 
 Temporal progression analysis demonstrates how attention shifts during the viewing period, from initial focus areas to subsequent points of interest. This timeline based visualization helps understand the sequence of human attention in processing road scenes, crucial information for developing more intuitive autonomous systems.
 
+[Download the Dataset](https://huggingface.co/datasets/Lennyox/hazardous_driving_eye_gaze)
+
 ## Ethics Statement
 This research collects anonymized eyetracking data during simulated driving scenarios. Data collection is strictly limited to gaze coordinates (X and Y positions), timestamps, and hazard selection responses. No personal information or biometric data beyond gaze positions are recorded or stored. Upon arrival of the driving simulation, users are propmpted with whether they wish to allow this web application have access to the camera. Participation also requires consent through our web platform, where users are fully informed about data collection scope before the eyetracking session begins. This is covered in the terms of service page on the web app. The driving simulation operates using browser capabilities without requiring software installation. Participants maintain complete control over their participation and can withdraw at any time by closing their browser.
 
