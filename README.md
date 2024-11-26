@@ -3,9 +3,7 @@
 ## Executive Summary:
 The advancement of autonomous vehicles has primarily focused on object detection and road segmentation, yet there remains a crucial gap in understanding how human drivers process and respond to complex road scenarios. This project addresses this gap by creating a dataset that captures human visual attention patterns during hazard detection in urban driving scenes. Through a web based eyetracking application, we collect gaze data as participants analyze potential road hazards, providing insights into human decision-making processes that could inform more intuitive autonomous driving systems.
 
-The dataset combines eyetracking data with scenes from the Cityscapes dataset, creating a bridge between computer vision capabilities and human perception. This integration allows for the development of autonomous systems that not only detect objects but also prioritize attention in ways that align with human judgment. The data collection process has yielded over 1,000 viewing sessions, each containing up to 90 gaze coordinates with temporal information, providing a foundation for understanding human attention patterns in driving scenarios.
-
-The potential impact of this research extends beyond autonomous vehicles into broader applications in transportation safety and HCI. The collected data can enhance driver monitoring systems, improve driver training programs, and contribute to the development of more intuitive driver assistance technologies. Furthermore, this dataset provides valuable insights for researchers studying human attention patterns and processes in critical situations.
+The dataset combines eyetracking data with scenes from the Cityscapes dataset, creating a bridge between computer vision capabilities and human perception. This allows for the development of autonomous systems that not only detect objects but also prioritize attention in ways that align with human judgment. The data collection process has yielded over 1,000 viewing sessions, each containing up to 90 gaze coordinates with temporal information, providing a foundation for understanding human attention patterns in driving scenarios.
 
 ## Prerequisites
 
@@ -100,7 +98,7 @@ This will create three types of visualizations:
 ## Description of Data:
 The data collection utilizes a full stack Hazardous Detection Web App. The application implements a careful protocol where each participant undergoes eye calibration before viewing urban driving scenes from the Cityscapes dataset. During each 10 second viewing period, the system records precise eye movements and gaze patterns, followed by participant feedback on perceived hazards.
 
-The dataset contains comprehensive eyetracking data including X and Y gaze coordinates, timestamps, viewing durations, and hazard servity selection. This information is complemented by metadata containing test set identifiers, image references, and detailed session information. The image data consists of a carefully curated subset of the Cityscapes dataset, organized into nine test sets that represent diverse urban driving scenarios.
+The dataset contains eyetracking data including X and Y gaze coordinates, timestamps, viewing durations, and hazard servity selection. This information is complemented by metadata containing test set identifiers, image references, and detailed session information. The image data consists of a carefully curated subset of the Cityscapes dataset, organized into nine test sets that represent diverse urban driving scenarios.
 
 All data is structured for research accessibility, with gaze data stored in CSV format and images maintained in JPG format. A dedicated mapping file provides clear relationships between original Cityscapes identifiers and the study's naming conventions, ensuring seamless integration with existing research frameworks.
 
@@ -108,9 +106,10 @@ All data is structured for research accessibility, with gaze data stored in CSV 
 The data collection strategy aims to build a dataset sufficient for meaningful machine learning analysis to enventually trained. Initial targets were set at 15,000 gaze samples/questions to ensure adequate representation across all decision classes. Currently, the dataset includes 1,015 completed viewing sessions, with each session capturing up to 90 distinct gaze points. This data collection provides information about viewing patterns.
 
 ## Exploratory Data Analysis
-The analysis reveals complex patterns in how participants visually process driving scenes. Through aggregate attention heatmaps, we've identified common focus areas that attract immediate attention across multiple viewers. These heatmaps highlight crucial zones where potential hazards are most frequently detected, providing insights into collective human perception of road safety.
+The analysis reveals complex patterns in how participants visually process driving scenes. Through aggregate attention heatmaps, we've identified common focus areas that attract immediate attention across multiple viewers. These heatmaps highlight zones where potential hazards are most frequently detected. This provids insights the collective human perception of road safety.
 
 Individual viewer pattern analysis reveals fascinating variations in how different participants approach hazard detection. Using visualization techniques, we can track unique gaze paths and attention patterns, showing how different viewers prioritize various elements within the same scene. This analysis helps identify both common patterns and individual variations in hazard detection strategies.
+
 Temporal progression analysis demonstrates how attention shifts during the viewing period, from initial focus areas to subsequent points of interest. This timeline based visualization helps understand the sequence of human attention in processing road scenes, crucial information for developing more intuitive autonomous systems.
 
 ## Ethics Statement
