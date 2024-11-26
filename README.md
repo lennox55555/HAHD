@@ -24,8 +24,8 @@ Before getting started, you'll need:
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/YourUsername/hazardous-driving-analysis.git
-cd hazardous-driving-analysis
+git clone https://github.com/lennox55555/Human-Aligned-Hazardous-Detection.git
+cd Human-Aligned-Hazardous-Detection
 ```
 
 2. Create and activate a virtual environment:
@@ -70,11 +70,6 @@ This will create three types of visualizations:
 1. Aggregate heatmaps showing overall attention patterns
 2. Viewer-separated heatmaps showing individual viewing patterns
 3. Temporal heatmaps showing gaze progression over time
-
-Options:
-```bash
-python main.py --base-dir /custom/path --output-dir /output/path --debug
-```
 
 ## File Structure:
 ```bash
