@@ -1,6 +1,0 @@
-datasets
-huggingface_hub
-pandas
-pillow
-requests
-tqdm
